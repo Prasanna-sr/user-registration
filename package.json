@@ -1,0 +1,22 @@
+{
+  "name": "user-registration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Prasanna-sr/user-registration.git"
+  },
+  "author": "Prasanna Ramanujam <prasannaraajkumar@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Prasanna-sr/user-registration/issues"
+  },
+  "homepage": "https://github.com/Prasanna-sr/user-registration",
+  "dependencies": {
+    "express": "^4.12.3"
+  }
+}
