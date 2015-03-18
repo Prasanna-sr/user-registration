@@ -1,8 +1,18 @@
 module.exports = function(app, express) {
+	var expressConfig = require('./expressConfig');
+	var router = require('./router');
     var usersRouter = express.Router();
-    var expressConfig = require('./expressConfig');
-    var router = require('./router');
-    router(usersRouter);
-    expressConfig(app, usersRouter);
+    
 
+    //initialize components
+    var mysqlConnection = require('./../components/mysql')();
+
+    //initialize models
+    var userModels = require('./../models/userModels')(mysqlConnection);
+
+    //initialize controllers
+    var userObj = require('./../controllers/usersController')(userModels);
+
+    router(usersRouter, userObj);
+    expressConfig(app, usersRouter);
 };
