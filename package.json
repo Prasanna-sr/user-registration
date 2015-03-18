@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Prasanna-sr/user-registration",
   "dependencies": {
     "body-parser": "^1.12.2",
+    "cookie-parser": "^1.3.4",
     "express": "^4.12.3",
     "mysql": "^2.5.5"
   }
