@@ -1,23 +1,21 @@
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
+/**
+* Express Router, handles all user entity related routes and middleware
+*/
+module.exports = function(userRouter, userControllerObj, userAuth) {
 
-module.exports = function(userRouter, userObj, userAuth) {
-
-    userRouter.post('/login', function(req, res, next) {
-        res.send('test');
-    });
-    userRouter.post('/logout', function(req, res, next) {
-        res.send('test');
-    });
+    userRouter.post('/login', userControllerObj.login);
+    userRouter.post('/logout', userControllerObj.logout);
 
     userRouter.use(cookieParser());
 
-    userRouter.get('/user', userAuth.ensureAuthenticated, userObj.getUsers);
-    //userRouter.get('/user', userObj.getUsers);
+    userRouter.get('/user', userAuth.ensureAuthenticated, userControllerObj.getUsers);
+    //userRouter.get('/user', userControllerObj.getUsers);
 
     userRouter.use(bodyParser.json());
 
-    userRouter.post('/user', userObj.signup);
+    userRouter.post('/user', userControllerObj.signup);
 
 
 };

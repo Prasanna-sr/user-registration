@@ -1,5 +1,39 @@
+/**
+* User controllers - User related endpoints are handled
+*/
 module.exports = function(userModels, userAuth) {
     var userObj = {};
+    userObj.login = function(req, res, next) {
+        var emailID = req.body.emailid;
+        var password = req.body.password;
+        if (!emailID || !password) {
+            res.status(400).send("emailid, password field is required !");
+            return;
+        }
+        userModels.getUser(emailID, function(err, userObj) {
+            if (err) {
+                res.status(500).send({
+                    "error": "server error"
+                });
+            } else {
+                if (password === userObj.password) {
+                    var token = userAuth.getHash(userObj.password);
+                    res.header('id', userObj.emailid);
+                    res.header('token', token);
+                    res.status(200).send({
+                        "message": "success"
+                    });
+                } else {
+                    res.status(400).send("error": "authentication failed");
+                }
+            }
+        });
+    };
+    userObj.logout = function(req, res, next) {
+        res.status(200).send({
+            "message": "success !"
+        });
+    };
     userObj.signup = function(req, res, next) {
         var userObj = req.body;
         if (!userObj || !userObj.emailid || !userObj.password) {

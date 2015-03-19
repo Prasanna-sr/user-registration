@@ -1,3 +1,6 @@
+/**
+* User Models - User related database calls are handled
+*/
 module.exports = function(connection) {
     var userModelObj = {};
     userModelObj.signup = function(email, password, name, city, callback) {
