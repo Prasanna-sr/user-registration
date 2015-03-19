@@ -1,4 +1,3 @@
-//$(window).load(function() {
 $(document).ready(function() {
     console.log('page ready');
     var hash = window.location.hash;
@@ -24,13 +23,18 @@ $(document).ready(function() {
         window.location.hash = 'home';
         $.ajax({
             method: 'GET',
-            url: 'api/user?emailid=' + 'p@gmail.com'
-        }).done(function(data) {
+            url: 'api/user'
+        }).done(function(objData) {
             console.log("get user success");
             $(".signup").hide();
             $(".login").hide();
             $("#btn-signout").show();
             $(".home").show();
+            console.log(objData);
+            if (objData) {
+                $('.lblName').text(objData.name);
+                $('.lblCity').text(objData.city);
+            }
 
         }).fail(function(data) {
             showLogin();
@@ -39,13 +43,13 @@ $(document).ready(function() {
     }
 
     function showLogin() {
-    	window.location.hash = '#';
+        window.location.hash = '#';
         $(".home").hide();
         $(".signup").hide();
         $("#btn-signout").hide();
         $(".login").show();
     }
-    
+
     $('#btn-signout').click(function() {
         $.ajax({
             method: 'GET',
@@ -87,14 +91,17 @@ $(document).ready(function() {
             "city": $('#inputCity').val()
         };
         $.ajax({
-            method: 'POST',
-            url: 'api/user',
-            contentType: 'application/json',
-            data: JSON.stringify(dataObj),
-            dataType: 'json'
-        }).done(function(data) {
-            console.log('sign up success');
-            showHome();
-        });
+                method: 'POST',
+                url: 'api/user',
+                contentType: 'application/json',
+                data: JSON.stringify(dataObj),
+                dataType: 'json',
+            }).done(function(data) {
+                console.log('sign up success');
+                showHome();
+            })
+            .fail(function(data) {
+                alert("signup failed");
+            });
     });
 });

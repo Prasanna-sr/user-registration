@@ -74,7 +74,7 @@ module.exports = function(userModels, userAuth) {
             });
     };
     userObj.getUsers = function(req, res, next) {
-        var emailID = req.query.emailid;
+        var emailID = req.query.emailid || (req.cookies ? req.cookies.id : null);
         if (!emailID) {
             res.status(400).send({
                 "message": "emailid is required !"
