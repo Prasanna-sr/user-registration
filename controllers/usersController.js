@@ -1,6 +1,6 @@
 /**
-* User controllers - User related endpoints are handled
-*/
+ * User controllers - User related endpoints are handled
+ */
 module.exports = function(userModels, userAuth) {
     var userObj = {};
     userObj.login = function(req, res, next) {
@@ -16,20 +16,24 @@ module.exports = function(userModels, userAuth) {
                     "error": "server error"
                 });
             } else {
-                if (password === userObj.password) {
+                if (userObj && (password ===  userObj.password)) {
                     var token = userAuth.getHash(userObj.password);
-                    res.header('id', userObj.emailid);
-                    res.header('token', token);
+                    res.cookie('id', userObj.emailID);
+                    res.cookie('token', token);
                     res.status(200).send({
                         "message": "success"
                     });
                 } else {
-                    res.status(400).send("error": "authentication failed");
+                    res.status(400).send({
+                        "error": "authentication failed"
+                    });
                 }
             }
         });
     };
     userObj.logout = function(req, res, next) {
+        res.clearCookie('id');
+        res.clearCookie('token');
         res.status(200).send({
             "message": "success !"
         });
@@ -55,8 +59,8 @@ module.exports = function(userModels, userAuth) {
                         });
                     } else {
                         var token = userAuth.getHash(userObj.password);
-                        res.header('id', userObj.emailid);
-                        res.header('token', token);
+                        res.cookie('id', userObj.emailid);
+                        res.cookie('token', token);
                         res.status(201).send({
                             "message": "success"
                         });

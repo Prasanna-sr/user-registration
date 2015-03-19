@@ -25,10 +25,10 @@ module.exports = function(connection) {
     userAuth.ensureAuthenticated = function(req, res, next) {
         var token;
         var emailID;
-        if (req.header && req.headers.token && req.headers.id) {
-            token = req.headers.token;
-            emailID = req.headers.id;
-        }   
+        if (req.cookies && req.cookies.token && req.cookies.id) {
+            token = req.cookies.token;
+            emailID = req.cookies.id;
+        }
         if (!token || !emailID) {
             res.status(401).send({
                 "error": "User not authorized"
@@ -36,10 +36,10 @@ module.exports = function(connection) {
             return;
         }
         getPassword(emailID, function(err, results) {
-            if (err || !results) {
+            if (err) {
                 next(err);
             } else {
-                if (userAuth.verifyHash(results[0].password, token)) {
+                if (results && results[0] && userAuth.verifyHash(results[0].password, token)) {
                     next();
                 } else {
                     res.status(401).send({

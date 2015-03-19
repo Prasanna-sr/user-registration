@@ -5,17 +5,18 @@ var cookieParser = require('cookie-parser')
 */
 module.exports = function(userRouter, userControllerObj, userAuth) {
 
-    userRouter.post('/login', userControllerObj.login);
-    userRouter.post('/logout', userControllerObj.logout);
+    
+    userRouter.get('/api/logout', userControllerObj.logout);
 
     userRouter.use(cookieParser());
 
-    userRouter.get('/user', userAuth.ensureAuthenticated, userControllerObj.getUsers);
+    userRouter.get('/api/user', userAuth.ensureAuthenticated, userControllerObj.getUsers);
     //userRouter.get('/user', userControllerObj.getUsers);
 
     userRouter.use(bodyParser.json());
-
-    userRouter.post('/user', userControllerObj.signup);
+    
+    userRouter.post('/api/login', userControllerObj.login);
+    userRouter.post('/api/user', userControllerObj.signup);
 
 
 };
