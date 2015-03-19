@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "mocha test"
   },
   "repository": {
@@ -22,5 +23,8 @@
     "express": "^4.12.3",
     "mysql": "^2.5.5",
     "serve-static": "^1.9.2"
+  },
+  "devDependencies": {
+    "sinon": "^1.14.1"
   }
 }
