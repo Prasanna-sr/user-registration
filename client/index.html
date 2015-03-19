@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Registration page</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+</head>
+
+<body>
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">User Registration</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <button type="submit" id="btn-signout" class="btn btn-success">Sign out</button>
+          </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <div class="login">
+        <div class="container">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="loginEmail" class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="loginEmail" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword" class="col-sm-2 control-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Remember me
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" id="btnSignin" class="btn btn-default">Sign in</button>
+                    </div>
+                </div>
+                <div class="form-group btn-signup">
+                    <label class="col-sm-2 control-label">New user ? </label>
+                    <button type="button" id="btn-signup" href="#signup" class="btn btn-primary btn-lg">Sign up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="home">
+        <h1>Welcome user</h1>
+    </div>
+    <div class="signup">
+        <div class="container">
+            <h1>Sign up </h1>
+            <form>
+                <div class="form-group">
+                    <label for="inputEmail">Email address</label>
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="inputName">name</label>
+                    <input class="form-control" id="inputName" placeholder="Enter name">
+                </div>
+                <div class="form-group">
+                    <label for="inputCity">city</label>
+                    <input class="form-control" id="inputCity" placeholder="Enter city">
+                </div>
+                <button type="submit" id="btn-submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+    <!-- /container -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
