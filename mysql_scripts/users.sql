@@ -1,3 +1,4 @@
+use test;
 CREATE TABLE `test`.`users` (
   `emailID` VARCHAR(100) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
