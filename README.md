@@ -1,16 +1,18 @@
 # user-registration
+Provides restful api's and UI for user registration activities. 
+It includes login, logout, signup, get user details. 
+Data is persisted in mysql.
 
-#Dependencies : 
+##Setup :
 
 1. mysql database
-mysql script found in mysql_scripts folder
+run mysql script found in mysql_scripts folder
 
 2. Nodejs
-
 npm install
 
-#Start application
+##Start application
 npm start
 
-#Test application
+##Test application
 npm test
