@@ -1,22 +1,25 @@
 /**
-* Initialize all the components of the application.
-* Also works as a dependency injection.
-*/
+ * Initialize all the components of the application.
+ * Also works as a dependency injection.
+ */
 module.exports = function(app, express) {
-	var expressConfig = require('./expressConfig');
-	var router = require('./router');
-    var usersRouter = express.Router();   
+    var expressConfig = require('./expressConfig');
+    var router = require('./router');
+    var usersRouter = express.Router();
 
     //components
-    var mysqlConnection = require('./../components/mysql')();
-    var userAuth = require('./../components/userAuth')(mysqlConnection);
+    // var mysqlConnection = require('./../components/mysql')();
+    // var userAuth = require('./../components/userAuth')(mysqlConnection);
+    require('./../components/mongoDB')(function(err, db) {
+        var userAuth = require('./../components/userAuth')(db);
 
-    //models
-    var userModels = require('./../models/userModels')(mysqlConnection);
+        //models
+        var userModels = require('./../models/userModels')(db);
 
-    //controllers
-    var userObj = require('./../controllers/usersController')(userModels, userAuth);
+        //controllers
+        var userObj = require('./../controllers/usersController')(userModels, userAuth);
 
-    router(usersRouter, userObj, userAuth);
-    expressConfig(app, usersRouter);
+        router(usersRouter, userObj, userAuth);
+        expressConfig(app, usersRouter);
+    });
 };

@@ -1,7 +1,9 @@
 /**
  * User controllers - User related endpoints are handled
  */
-module.exports = function(userModels, userAuth) {
+module.exports = userController;
+
+function userController(userModels, userAuth) {
     var userObj = {};
     userObj.login = function(req, res, next) {
         var emailID = req.body.emailid;
@@ -16,7 +18,7 @@ module.exports = function(userModels, userAuth) {
                     "error": "server error"
                 });
             } else {
-                if (userObj && (password ===  userObj.password)) {
+                if (userObj && (password === userObj.password)) {
                     var token = userAuth.getHash(userObj.password);
                     res.cookie('id', userObj.emailID);
                     res.cookie('token', token);
@@ -73,7 +75,7 @@ module.exports = function(userModels, userAuth) {
 
             });
     };
-    userObj.getUsers = function(req, res, next) {
+    userObj.getUserDetails = function(req, res, next) {
         var emailID = req.query.emailid || (req.cookies ? req.cookies.id : null);
         if (!emailID) {
             res.status(400).send({
@@ -82,6 +84,18 @@ module.exports = function(userModels, userAuth) {
             return;
         }
         userModels.getUser(emailID, function(err, result) {
+            if (err) {
+                res.status(500).send({
+                    "error": "server error"
+                });
+            } else {
+                res.status(200).send(result);
+            }
+        });
+    };
+
+     userObj.getAllUsers = function(req, res, next) {
+        userModels.getUsers(function(err, result) {
             if (err) {
                 res.status(500).send({
                     "error": "server error"
