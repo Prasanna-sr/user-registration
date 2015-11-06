@@ -112,12 +112,12 @@ describe('user controllers', function() {
             });
         };
             req.query.emailid = 1;
-            userControllerObj.getUsers(req, res);
+            userControllerObj.getUserDetails(req, res);
             assert(res.status.calledWith(200));
         });
         it('should return 400, if no emailid', function() {
             req.query.emailid = 0;
-            userControllerObj.getUsers(req, res);
+            userControllerObj.getUserDetails(req, res);
             assert(res.status.calledWith(400));
         });
         it('should return 500, if error in fetching user details', function() {
@@ -125,7 +125,7 @@ describe('user controllers', function() {
                 callback("err");
             };
             req.query.emailid = 1;
-            userControllerObj.getUsers(req, res);
+            userControllerObj.getUserDetails(req, res);
             assert(res.status.calledWith(500));
         });
     });
