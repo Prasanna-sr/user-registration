@@ -5,11 +5,9 @@
 var userModels = require('./../models/userModels');
 var routes = require('./routes');
 var expressConfig = require('./expressConfig');
-var mondoDb = require('./../components/mongoDB')();
+var mondoDb = require('./../components/mongoConnection')();
 var userController = require('./../controllers/usersController');
 var userAuth = require('./../components/userAuth');
-
-module.exports = Initialize;
 
 function Initialize(app, express) {
     var usersRouter = express.Router();
@@ -21,8 +19,9 @@ function Initialize(app, express) {
 
         //controllers
         var userObj = userController(userModelObj, userAuthObj);
-
         routes(usersRouter, userObj, userAuthObj);
         expressConfig(app, usersRouter);
     });
 }
+
+module.exports = Initialize;

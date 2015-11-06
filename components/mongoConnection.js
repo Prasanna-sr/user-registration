@@ -5,7 +5,6 @@ function mongoDbConnection() {
     var mongoObj = {};
     mongoObj.connect = connect;
     return mongoObj;
-
     function connect(callback) {
         // MongoLab connection URL
         var url = 'mongodb://test:test@ds049754.mongolab.com:49754/prk';

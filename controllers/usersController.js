@@ -1,11 +1,16 @@
 /**
  * User controllers - User related endpoints are handled
  */
-module.exports = userController;
-
 function userController(userModels, userAuth) {
     var userObj = {};
-    userObj.login = function(req, res, next) {
+    userObj.login = login;
+    userObj.logout = logout;
+    userObj.signup = signup;
+    userObj.getUserDetails = getUserDetails;
+    userObj.getAllUsers = getAllUsers;
+    return userObj;
+
+    function login(req, res, next) {
         var emailID = req.body.emailid;
         var password = req.body.password;
         if (!emailID || !password) {
@@ -32,15 +37,18 @@ function userController(userModels, userAuth) {
                 }
             }
         });
-    };
-    userObj.logout = function(req, res, next) {
+    }
+
+    function logout(req, res, next) {
         res.clearCookie('id');
         res.clearCookie('token');
         res.status(200).send({
             "message": "success !"
         });
-    };
-    userObj.signup = function(req, res, next) {
+    }
+
+
+    function signup(req, res, next) {
         var userObj = req.body;
         if (!userObj || !userObj.emailid || !userObj.password) {
             res.status(400).send({
@@ -53,20 +61,13 @@ function userController(userModels, userAuth) {
         userModels.signup(userObj.emailid, userObj.password,
             userObj.name, userObj.city,
             function(err, result) {
-
                 if (!err) {
-                    if (result.duplicate) {
-                        res.status(400).send({
-                            "message": "emailid already existing"
-                        });
-                    } else {
-                        var token = userAuth.getHash(userObj.password);
-                        res.cookie('id', userObj.emailId);
-                        res.cookie('token', token);
-                        res.status(201).send({
-                            "message": "success"
-                        });
-                    }
+                    var token = userAuth.getHash(userObj.password);
+                    res.cookie('id', userObj.emailId);
+                    res.cookie('token', token);
+                    res.status(201).send({
+                        "message": "success"
+                    });
                 } else {
                     res.status(500).send({
                         "error": "server error"
@@ -74,8 +75,9 @@ function userController(userModels, userAuth) {
                 }
 
             });
-    };
-    userObj.getUserDetails = function(req, res, next) {
+    }
+
+    function getUserDetails(req, res, next) {
         var emailID = req.query.emailid || (req.cookies ? req.cookies.id : null);
         if (!emailID) {
             res.status(400).send({
@@ -92,9 +94,9 @@ function userController(userModels, userAuth) {
                 res.status(200).send(result);
             }
         });
-    };
+    }
 
-     userObj.getAllUsers = function(req, res, next) {
+    function getAllUsers(req, res, next) {
         userModels.getUsers(function(err, result) {
             if (err) {
                 res.status(500).send({
@@ -104,7 +106,7 @@ function userController(userModels, userAuth) {
                 res.status(200).send(result);
             }
         });
-    };
+    }
+}
 
-    return userObj;
-};
+module.exports = userController;

@@ -1,11 +1,16 @@
 /**
  * User Models - User related database calls are handled
  */
-module.exports = function(db) {
-    var userModelObj = {};
+function UserModels(db) {
     var collection = db.collection('users');
 
-    userModelObj.signup = function(email, password, name, city, callback) {
+    var userModelObj = {};
+    userModelObj.signup = signup;
+    userModelObj.getUser = getUser;
+    userModelObj.getUsers = getUsers;
+    return userModelObj;
+
+    function signup(email, password, name, city, callback) {
         var userObj = {
             emailId: email,
             password: password,
@@ -19,8 +24,9 @@ module.exports = function(db) {
                 callback(err);
             }
         });
-    };
-    userModelObj.getUser = function(email, callback) {
+    }
+
+    function getUser(email, callback) {
         collection.find({
             'emailId': email
         }).toArray(function(err, result) {
@@ -32,7 +38,8 @@ module.exports = function(db) {
             }
         });
     }
-    userModelObj.getUsers = function(callback) {
+
+    function getUsers(callback) {
         collection.find({}).toArray(function(err, result) {
             if (!err) {
                 callback(null, result);
@@ -41,5 +48,7 @@ module.exports = function(db) {
             }
         });
     }
-    return userModelObj;
-};
+
+}
+
+module.exports = UserModels;

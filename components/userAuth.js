@@ -4,26 +4,32 @@
 var crypto = require('crypto');
 
 //Implements hmac authentication
-module.exports = function(db) {
+function UserAuth(db) {
     var encoding = 'base64';
     var hashAlgorithm = 'sha1';
     var secretKey = 'userkey';
     var userAuth = {};
     var collection = db.collection('users');
 
-    userAuth.getHash = function(data) {
+    userAuth.getHash = getHash;
+    userAuth.verifyHash = verifyHash;
+    userAuth.ensureAuthenticated = ensureAuthenticated;
+
+    return userAuth;
+
+    function getHash(data) {
         var hmacObj = crypto.createHmac(hashAlgorithm, secretKey);
         hmacObj.update(data);
         return hmacObj.digest([encoding]);
     };
 
-    userAuth.verifyHash = function(data, hash) {
+    function verifyHash(data, hash) {
         var hmacObj = crypto.createHmac(hashAlgorithm, secretKey);
         hmacObj.update(data);
         return hmacObj.digest([encoding]) === hash;
     };
 
-    userAuth.ensureAuthenticated = function(req, res, next) {
+    function ensureAuthenticated(req, res, next) {
         var token;
         var emailId;
         if (req.cookies && req.cookies.token && req.cookies.id) {
@@ -64,6 +70,6 @@ module.exports = function(db) {
             }
         });
     }
+}
 
-    return userAuth;
-};
+module.exports = UserAuth;
