@@ -20,7 +20,7 @@ function userController(userModels, userAuth) {
             } else {
                 if (userObj && (password === userObj.password)) {
                     var token = userAuth.getHash(userObj.password);
-                    res.cookie('id', userObj.emailID);
+                    res.cookie('id', userObj.emailId);
                     res.cookie('token', token);
                     res.status(200).send({
                         "message": "success"

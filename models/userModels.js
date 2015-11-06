@@ -28,7 +28,8 @@ module.exports = function(db) {
         }).toArray(function(err, result) {
 
             if (!err) {
-                callback(null, result);
+                console.log(result)
+                callback(null, result[0]);
             } else {
                 callback(err);
             }

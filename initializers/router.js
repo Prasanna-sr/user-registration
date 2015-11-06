@@ -10,15 +10,15 @@ module.exports = function(userRouter, userControllerObj, userAuth) {
 
     userRouter.use(cookieParser());
 
-    // userRouter.get('/api/user', userAuth.ensureAuthenticated, 
-    // userControllerObj.getUsers);
+    userRouter.get('/api/user', userAuth.ensureAuthenticated, 
+        userControllerObj.getUserDetails);
 
-    userRouter.get('/api/user', userControllerObj.getUserDetails);
-    userRouter.get('/api/users', userControllerObj.getAllUsers);
+    // userRouter.get('/api/user', userControllerObj.getUserDetails);
+    // userRouter.get('/api/users', userControllerObj.getAllUsers);
 
     userRouter.use(bodyParser.json());
 
-    userRouter.post('/api/login', userControllerObj.login);
+    userRouter.put('/api/login', userControllerObj.login);
     userRouter.post('/api/user', userControllerObj.signup);
 
 

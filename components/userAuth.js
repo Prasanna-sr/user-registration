@@ -4,11 +4,12 @@
 var crypto = require('crypto');
 
 //Implements hmac authentication
-module.exports = function(connection) {
+module.exports = function(db) {
     var encoding = 'base64';
     var hashAlgorithm = 'sha1';
     var secretKey = 'userkey';
     var userAuth = {};
+    var collection = db.collection('users');
 
     userAuth.getHash = function(data) {
         var hmacObj = crypto.createHmac(hashAlgorithm, secretKey);
@@ -24,18 +25,18 @@ module.exports = function(connection) {
 
     userAuth.ensureAuthenticated = function(req, res, next) {
         var token;
-        var emailID;
+        var emailId;
         if (req.cookies && req.cookies.token && req.cookies.id) {
             token = req.cookies.token;
-            emailID = req.cookies.id;
+            emailId = req.cookies.id;
         }
-        if (!token || !emailID) {
+        if (!token || !emailId) {
             res.status(401).send({
                 "error": "User not authorized"
             });
             return;
         }
-        getPassword(emailID, function(err, results) {
+        getPassword(emailId, function(err, results) {
             if (err) {
                 next(err);
             } else {
@@ -52,17 +53,16 @@ module.exports = function(connection) {
     };
 
 
-    function getPassword(emailID, callback) {
-        var query = 'select password from users where emailID=?';
-        connection.query(query, [emailID],
-            function(err, results) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(null, results);
-                }
-            });
-
+    function getPassword(emailId, callback) {
+        collection.find({
+            'emailId': emailId
+        }).toArray(function(err, result) {
+            if (!err) {
+                callback(null, result);
+            } else {
+                callback(err);
+            }
+        });
     }
 
     return userAuth;

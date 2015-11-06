@@ -66,7 +66,7 @@ $(document).ready(function() {
             password: $('#loginPassword').val()
         };
         $.ajax({
-            method: 'POST',
+            method: 'PUT',
             url: 'api/login',
             contentType: 'application/json',
             data: JSON.stringify(dataObj),
@@ -75,6 +75,7 @@ $(document).ready(function() {
             console.log("login success");
             showHome();
         }).fail(function() {
+            console.log("login failed");
             alert("login failed !");
         })
     });
