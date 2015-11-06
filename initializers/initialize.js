@@ -2,24 +2,27 @@
  * Initialize all the components of the application.
  * Also works as a dependency injection.
  */
-module.exports = function(app, express) {
-    var expressConfig = require('./expressConfig');
-    var router = require('./router');
+var userModels = require('./../models/userModels');
+var routes = require('./routes');
+var expressConfig = require('./expressConfig');
+var mondoDb = require('./../components/mongoDB')();
+var userController = require('./../controllers/usersController');
+var userAuth = require('./../components/userAuth');
+
+module.exports = Initialize;
+
+function Initialize(app, express) {
     var usersRouter = express.Router();
-
     //components
-    // var mysqlConnection = require('./../components/mysql')();
-    // var userAuth = require('./../components/userAuth')(mysqlConnection);
-    require('./../components/mongoDB')(function(err, db) {
-        var userAuth = require('./../components/userAuth')(db);
-
+    mondoDb.connect(function(err, db) {
+        var userAuthObj = userAuth(db);
         //models
-        var userModels = require('./../models/userModels')(db);
+        var userModelObj = userModels(db);
 
         //controllers
-        var userObj = require('./../controllers/usersController')(userModels, userAuth);
+        var userObj = userController(userModelObj, userAuthObj);
 
-        router(usersRouter, userObj, userAuth);
+        routes(usersRouter, userObj, userAuthObj);
         expressConfig(app, usersRouter);
     });
-};
+}
