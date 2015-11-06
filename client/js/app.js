@@ -74,8 +74,9 @@ $(document).ready(function() {
         }).done(function(data) {
             console.log("login success");
             showHome();
-        }).fail(function() {
+        }).fail(function(err) {
             console.log("login failed");
+            console.log(err);
             alert("login failed !");
         })
     });

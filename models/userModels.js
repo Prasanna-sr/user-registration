@@ -13,8 +13,6 @@ module.exports = function(db) {
             city: city
         }
         collection.insertOne(userObj, function(err, result) {
-            console.log(result);
-            console.log(err);
             if (!err) {
                 callback(null, result);
             } else {
@@ -28,7 +26,6 @@ module.exports = function(db) {
         }).toArray(function(err, result) {
 
             if (!err) {
-                console.log(result)
                 callback(null, result[0]);
             } else {
                 callback(err);

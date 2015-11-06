@@ -14,7 +14,7 @@ module.exports = function(userRouter, userControllerObj, userAuth) {
         userControllerObj.getUserDetails);
 
     // userRouter.get('/api/user', userControllerObj.getUserDetails);
-    // userRouter.get('/api/users', userControllerObj.getAllUsers);
+     userRouter.get('/api/users', userControllerObj.getAllUsers);
 
     userRouter.use(bodyParser.json());
 

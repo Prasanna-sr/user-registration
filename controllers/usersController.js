@@ -61,7 +61,7 @@ function userController(userModels, userAuth) {
                         });
                     } else {
                         var token = userAuth.getHash(userObj.password);
-                        res.cookie('id', userObj.emailid);
+                        res.cookie('id', userObj.emailId);
                         res.cookie('token', token);
                         res.status(201).send({
                             "message": "success"
