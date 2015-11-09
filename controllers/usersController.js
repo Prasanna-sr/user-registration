@@ -27,7 +27,7 @@ function userController(userModels, userAuth) {
                     var token = userAuth.getHash(userObj.password);
                     res.cookie('id', userObj.emailId);
                     res.cookie('token', token);
-                    res.status(200).send({
+                    res.status(201).json({
                         "message": "success"
                     });
                 } else {
@@ -63,13 +63,13 @@ function userController(userModels, userAuth) {
             function(err, result) {
                 if (!err) {
                     var token = userAuth.getHash(userObj.password);
-                    res.cookie('id', userObj.emailId);
+                    res.cookie('id', userObj.emailid);
                     res.cookie('token', token);
-                    res.status(201).send({
+                    res.status(201).json({
                         "message": "success"
                     });
                 } else {
-                    res.status(500).send({
+                    res.status(500).json({
                         "error": "server error"
                     });
                 }
@@ -80,7 +80,7 @@ function userController(userModels, userAuth) {
     function getUserDetails(req, res, next) {
         var emailID = req.query.emailid || (req.cookies ? req.cookies.id : null);
         if (!emailID) {
-            res.status(400).send({
+            res.status(400).json({
                 "message": "emailid is required !"
             });
             return;

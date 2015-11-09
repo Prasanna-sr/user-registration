@@ -66,8 +66,9 @@ $(document).ready(function() {
             password: $('#loginPassword').val()
         };
         $.ajax({
-            method: 'PUT',
+            method: 'POST',
             url: 'api/login',
+            accepts: 'application/json',
             contentType: 'application/json',
             data: JSON.stringify(dataObj),
             dataType: 'json'

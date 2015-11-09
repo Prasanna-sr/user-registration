@@ -18,7 +18,7 @@ module.exports = function(userRouter, userControllerObj, userAuth) {
 
     userRouter.use(bodyParser.json());
 
-    userRouter.put('/api/login', userControllerObj.login);
+    userRouter.post('/api/login', userControllerObj.login);
     userRouter.post('/api/user', userControllerObj.signup);
 
 
